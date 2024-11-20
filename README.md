@@ -9,3 +9,6 @@ Here’s how to get your clientID and clientSecret,
   8.  Settings
   9.  Edit,
   10.  Add the URI displayed by device.
+
+Wiring Diagram
+![Wiring DIagram](https://github.com/user-attachments/assets/b4e44b36-2615-4fc2-8501-6ba9b88f5ee8)
