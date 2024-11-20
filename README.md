@@ -1,3 +1,4 @@
+## Spotify API Setup
 Here’s how to get your clientID and clientSecret,
   1.  Login to Spotify for developers
   2.  Select Create New
