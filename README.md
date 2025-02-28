@@ -1,42 +1,53 @@
 # New & Better Clone Thing
-![Thumbnail 3](https://github.com/user-attachments/assets/155cefd5-bdbc-43d5-b2a0-3fdb65e4f242)
+
+![Thumbnail](https://github.com/user-attachments/assets/155cefd5-bdbc-43d5-b2a0-3fdb65e4f242)
 
 ## Updates
-Here's all the updates compared to previous version,
-  1. Better, Nicer Case: 40% thinner than first version
-  2. No Tools Assembly: SnapFit design to allow for assembly without any tools.
-  3. Forget the Wire Mess: Custom PCB for easy assembly and less soldering
-  4. No Complex Assembly: No extra buttons for controls, everything works using the Rotary encoder.
-  5. New Video: This is a plus, right? ![Clone Thing Made Easier](https://youtu.be/O8BWIcywnc4)
+Here are all the improvements compared to the previous version:
+
+1. **Sleeker Design**: 40% thinner than the first version for a more compact look.
+2. **Tool-Free Assembly**: SnapFit design allows for easy assembly without tools.
+3. **Less Wiring Hassle**: A custom PCB simplifies assembly and reduces soldering.
+4. **Simplified Controls**: No extra buttons—everything is controlled via the rotary encoder.
+5. **New Video**: A detailed walkthrough of the new version! Watch here: [Clone Thing Made Easier](https://youtu.be/O8BWIcywnc4)
+
+---
 
 ## Case
-Here's Link to the new and improved case design,
-  ![DJI_20250216_153421_838_video mp4_snapshot_00 01 770](https://github.com/user-attachments/assets/a90b15b2-c142-4d17-b0d7-63361946f0e1)
-  ![New Clone Thing](https://makerworld.com/en/models/1159978-clone-thing#profileId-1165920)![Uploading DJI_20250216_153421_838_video.mp4_snapshot_00.01.770.jpg…]()
+Check out the new and improved case design:
+
+[![Case Preview](https://github.com/user-attachments/assets/a90b15b2-c142-4d17-b0d7-63361946f0e1)](https://makerworld.com/en/models/1159978-clone-thing#profileId-1165920)
+
+🔗 [Download the Case Design](https://makerworld.com/en/models/1159978-clone-thing#profileId-1165920)
+
+---
 
 ## Spotify API Setup
-Here’s how to get your clientID and clientSecret,
-  1.  Login to Spotify for developers
-  2.  Select Create New
-  3.  Give it any Name and Description you would like.
-  4.  For now just add any redirect URI,
-  5.  Select WebAPI.
-  6.  Select the required Checkbox.
-  7.  Hit Save.
-  8.  Settings
-  9.  Edit,
-  10.  Add the URI displayed by device.
+To set up your **Spotify API** credentials, follow these steps:
+
+1. Log in to [Spotify for Developers](https://developer.spotify.com/dashboard/applications).
+2. Click **Create New App**.
+3. Enter any **Name** and **Description** you prefer.
+4. Add a temporary **Redirect URI** (can be updated later).
+5. Choose **Web API** as the application type.
+6. Accept the required terms and conditions.
+7. Click **Save**.
+8. Navigate to **Settings**.
+9. Click **Edit** and update the **Redirect URI** with the one displayed by your device.
+
+---
 
 ## Controls
-1x Play/Pause
-2x Next Song
-3x Prev Song
+- **1x Press** → Play/Pause
+- **2x Press** → Next Song
+- **3x Press** → Previous Song
 
+---
 
+## Old Version
 
-# OLD VERSION
+### Wiring Diagram
 
+![Wiring Diagram](https://github.com/user-attachments/assets/b4e44b36-2615-4fc2-8501-6ba9b88f5ee8)
 
-# Wiring Diagram
-
-![Wiring DIagram](https://github.com/user-attachments/assets/b4e44b36-2615-4fc2-8501-6ba9b88f5ee8)
+---
