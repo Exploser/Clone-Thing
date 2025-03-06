@@ -45,13 +45,13 @@ bool tft_output(int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t *bitmap) 
 |User modifiable variables|
 =========================*/
 // WiFi credentials
-#define WIFI_SSID "WiFi SSID Here"
-#define PASSWORD "WiFi Password Here"
+#define WIFI_SSID "investRight"
+#define PASSWORD "5194044765"
 
 // Spotify API credentials
-#define CLIENT_ID "Spotify Client ID Here"
-#define CLIENT_SECRET "Spotify Client Secret Here"
-#define REDIRECT_URI "http://'ADD THE IP DISPLAYED HERE'/callback"
+#define CLIENT_ID "9902f56094ab40e4acbcf1870232c3ab"
+#define CLIENT_SECRET "cf29a8b79f91420aafc89302d52744ef"
+#define REDIRECT_URI "http://10.0.0.33/callback"
 
 // Rotary Encoder
 #define CLK_PIN D1
@@ -198,8 +198,8 @@ public:
       tokenExpireTime = doc["expires_in"];
       tokenStartTime = millis();
       accessTokenSet = true;
-      Serial.println(accessToken);
-      Serial.println(refreshToken);
+      // Serial.println(accessToken);
+      // Serial.println(refreshToken);
     } else {
       Serial.println(https.getString());
     }
@@ -226,8 +226,8 @@ public:
       tokenExpireTime = doc["expires_in"];
       tokenStartTime = millis();
       accessTokenSet = true;
-      Serial.println(accessToken);
-      Serial.println(refreshToken);
+      // Serial.println(accessToken);
+      // Serial.println(refreshToken);
     } else {
       Serial.println(https.getString());
     }
@@ -269,7 +269,7 @@ public:
       songId = getValue(https, "uri");
       String isPlay = getValue(https, "is_playing");
       isPlaying = isPlay == "true";
-      Serial.println(isPlay);
+      // Serial.println(isPlay);
       songId = songId.substring(15, songId.length() - 1);
       https.end();
       if (songId != currentSong.Id) {
@@ -277,8 +277,8 @@ public:
           SPIFFS.remove("/albumArt.jpg");
         }
         bool loaded_ok = getFile(imageLink.substring(1, imageLink.length() - 1).c_str(), "/albumArt.jpg");
-        Serial.println("Image load was: ");
-        Serial.println(loaded_ok);
+        // Serial.println("Image load was: ");
+        // Serial.println(loaded_ok);
         refresh = true;
         tft.fillScreen(TFT_BLACK);
       }
@@ -313,13 +313,13 @@ public:
         TJpgDec.setJpgScale(1);
         int xCenter = 10;
         TJpgDec.drawFsJpg(xCenter, 10, "/albumArt.jpg");
-        Serial.println("Displaying album art.");
+        // Serial.println("Displaying album art.");
       } else {
         TJpgDec.setSwapBytes(false);
         TJpgDec.setJpgScale(2);
         int xCenter = (tft.width()) / 2;
         TJpgDec.drawFsJpg(xCenter, 10, "/Angry.jpg");
-        Serial.println("Displaying default image.");
+        // Serial.println("Displaying default image.");
       }
 
       tft.setTextDatum(MC_DATUM);
@@ -339,13 +339,13 @@ public:
         tft.drawString(songTitle, tft.width() / 2, 180);
       }
 
-      Serial.print("Drawing song title: ");
-      Serial.println(currentSong.song);
+      // Serial.print("Drawing song title: ");
+      // Serial.println(currentSong.song);
 
       tft.setTextSize(2);
       tft.setCursor(tft.width() / 2, 210);
-      Serial.print("Drawing artist name: ");
-      Serial.println(currentSong.artist);
+      // Serial.print("Drawing artist name: ");
+      // Serial.println(currentSong.artist);
       tft.drawString(currentSong.artist, tft.width() / 2, 210);
 
       tft.drawRoundRect(
@@ -366,7 +366,7 @@ public:
         10,
         TFT_BLACK);
       lastSongPositionMs = currentSongPositionMs;
-      Serial.println("Updating song position.");
+      // Serial.println("Updating song position.");
     }
 
     tft.fillSmoothRoundRect(
@@ -414,7 +414,7 @@ public:
     bool success = false;
 
     if (httpResponseCode == 204) {
-      Serial.println((isPlaying ? "Playing" : "Pausing"));
+      // Serial.println((isPlaying ? "Playing" : "Pausing"));
       success = true;
     } else {
       Serial.print("Error pausing or playing: ");
@@ -429,8 +429,8 @@ public:
   }
 
   bool adjustVolume(int vol) {
-    Serial.print("Volume Change: ");
-    Serial.print(vol);
+    // Serial.print("Volume Change: ");
+    // Serial.print(vol);
     String url = "https://api.spotify.com/v1/me/player/volume?volume_percent=" + String(vol);
     https.begin(*client, url);
     String auth = "Bearer " + String(accessToken);
@@ -444,8 +444,8 @@ public:
     } else if (httpResponseCode == 403) {
       currVol = vol;
       success = false;
-      Serial.print("Error setting volume: ");
-      Serial.println(httpResponseCode);
+      Serial.print("Error setting volume (403): ");
+      // Serial.println(httpResponseCode);
       String response = https.getString();
       Serial.println(response);
     } else {
@@ -477,7 +477,7 @@ public:
     bool success = false;
 
     if (httpResponseCode == 204) {
-      Serial.println("Skipping forward");
+      // Serial.println("Skipping forward");
       success = true;
     } else {
       Serial.print("Error skipping forward: ");
@@ -500,7 +500,7 @@ public:
     bool success = false;
 
     if (httpResponseCode == 204) {
-      Serial.println("Skipping backward");
+      // Serial.println("Skipping backward");
       success = true;
     } else {
       Serial.print("Error skipping backward: ");
@@ -531,7 +531,7 @@ private:
 };
 
 bool buttonStates[] = { 1, 1, 1, 1 };
-int debounceDelay = 50;
+int debounceDelay = 10;
 unsigned long debounceTimes[] = { 0, 0, 0, 0 };
 int buttonPins[] = { D0, D6, 1, 3 };
 
@@ -539,7 +539,7 @@ ESP8266WebServer server(80);
 SpotConn spotifyConnection;
 
 void handleRoot() {
-  Serial.println("Handling root");
+  // Serial.println("Handling root");
   char page[500];
   sprintf(page, mainPage, CLIENT_ID, REDIRECT_URI);
   server.send(200, "text/html", String(page) + "\r\n");
@@ -550,10 +550,10 @@ void handleCallbackPage() {
     if (server.arg("code") == "") {
       char page[500];
       sprintf(page, errorPage, CLIENT_ID, REDIRECT_URI);
-      Serial.println("Spotify setup start");
+      // Serial.println("Spotify setup start");
       server.send(200, "text/html", String(page));
     } else {
-      Serial.println("Spotify setup start2");
+      // Serial.println("Spotify setup start2");
       if (spotifyConnection.getUserCode(server.arg("code"))) {
         server.send(200, "text/html", "Spotify setup complete Auth refresh in :" + String(spotifyConnection.tokenExpireTime));
       } else {
@@ -563,7 +563,7 @@ void handleCallbackPage() {
       }
     }
   } else {
-    Serial.println("Spotify setup complete");
+    // Serial.println("Spotify setup complete");
     server.send(200, "text/html", "Spotify setup complete");
   }
 }
@@ -597,6 +597,10 @@ unsigned long lastDebounceTime = 0;
 unsigned long lastChangeTime = 0;         // Time of the last counter change
 const unsigned long displayDelay = 1000;  // Delay to display the counter (1 second)
 int lastCounter = 0;                      // Variable to track if the counter has changed
+//test
+int button3PressCount = 0;        // Counter for button 3 presses
+unsigned long lastPressTime = 0;  // Last press timestamp
+const int pressWindow = 700;      // Time window in milliseconds (1 second)
 
 void setup() {
   // Set encoder pins as input
@@ -610,19 +614,19 @@ void setup() {
 
   // Initialize SPIFFS with retries
   if (!SPIFFS.begin()) {
-    Serial.println("SPIFFS initialization failed! Retrying...");
+    // Serial.println("SPIFFS initialization failed! Retrying...");
     int retries = 0;
     while (!SPIFFS.begin() && retries < 3) {
       retries++;
       delay(1000);
     }
     if (retries == 3) {
-      Serial.println("SPIFFS failed after 3 retries. Restarting...");
+      // Serial.println("SPIFFS failed after 3 retries. Restarting...");
       ESP.restart();  // Restart if SPIFFS fails
     }
   }
 
-  Serial.println("\r\nInitialization done.");
+  // Serial.println("\r\nInitialization done.");
 
   tft.begin();
   tft.fillScreen(TFT_BLACK);
@@ -632,17 +636,17 @@ void setup() {
   TJpgDec.setCallback(tft_output);
 
   WiFi.begin(WIFI_SSID, PASSWORD);
-  Serial.println("Connecting to WiFi...");
+  // Serial.println("Connecting to WiFi...");
 
   // Attempt Wi-Fi connection
   int attempts = 0;
   while (WiFi.status() != WL_CONNECTED && attempts < MAX_ATTEMPTS) {
     delay(1000);
     attempts++;
-    Serial.println("Attempting Wi-Fi connection...");
+    // Serial.println("Attempting Wi-Fi connection...");
   }
   if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("Failed to connect to Wi-Fi");
+    // Serial.println("Failed to connect to Wi-Fi");
     ESP.restart();
   } else {
     Serial.println("Connected to Wi-Fi. IP: " + WiFi.localIP().toString());
@@ -654,7 +658,7 @@ void setup() {
   server.on("/", handleRoot);
   server.on("/callback", handleCallbackPage);
   server.begin();
-  Serial.println("HTTP server started");
+  // Serial.println("HTTP server started");
 
   // Initialize buttons
   for (int i = 0; i < 4; i++) {
@@ -676,9 +680,9 @@ void loop() {
 
     // Refresh token if expired
     if ((millis() - spotifyConnection.tokenStartTime) / 1000 > spotifyConnection.tokenExpireTime) {
-      Serial.println("Refreshing token");
+      // Serial.println("Refreshing token");
       if (spotifyConnection.refreshAuth()) {
-        Serial.println("Refreshed token");
+        // Serial.println("Refreshed token");
       }
     }
 
@@ -689,66 +693,101 @@ void loop() {
       refreshLoop = millis();
 
       // DEBUG: Indicate that screen is being updated
-      Serial.println("Screen updated with track info.");
+      // Serial.println("Screen updated with track info.");
     }
 
-    // Handle button presses with debouncing
-    for (int i = 0; i < 4; i++) {
-      int reading = digitalRead(buttonPins[i]);
-      if (reading != buttonStates[i]) {
-        if (millis() - debounceTimes[i] > debounceDelay) {
-          buttonStates[i] = reading;
-          if (reading == LOW) {
-            handleButtonPress(i);  // Handle button action
+    // // Handle button presses with debouncing
+    // for (int i = 0; i < 4; i++) {
+    int reading = digitalRead(3);
+    if (reading != buttonStates[3]) {
+      if (millis() - debounceTimes[3] > debounceDelay) {
+        buttonStates[3] = reading;
+        if (reading == LOW) {  // Button pressed
+          if (millis() - lastPressTime > pressWindow) {
+            // Reset count if more than 1 second has passed since last press
+            button3PressCount = 0;
           }
-          debounceTimes[i] = millis();
+          button3PressCount++;       // Increment press count
+          lastPressTime = millis();  // Update last press time
         }
+        debounceTimes[3] = millis();
+        // handleButtonPress(3);  // Handle button action
       }
+      debounceTimes[3] = millis();
     }
-    // Read the current state of the CLK pin
-    int currentStateCLK = digitalRead(CLK_PIN);
+    // Check if 1 second has passed since the last press
+    if ((millis() - lastPressTime) > pressWindow && button3PressCount > 0) {
+      // Serial.println(button3PressCount);
+      handleButtonPress(button3PressCount);
+      button3PressCount = 0;  // Reset the count after calling the function
+    }
+  // }
 
-    // If the state of CLK has changed, a rotation occurred
-    if (currentStateCLK != lastStateCLK) {
-      // Check if enough time has passed to debounce
-      if ((millis() - lastDebounceTime) > debounceDelay) {
-        // Determine the direction based on DT pin
-        if (digitalRead(DT_PIN) != currentStateCLK) {
-          // Clockwise rotation
-          curVol = curVol + 5;
-        } else {
-          // Counter-clockwise rotation
-          curVol = curVol - 5;
-        }
+  // int reading = digitalRead(3);
+  // if (reading != buttonStates[3]) {
+  //   if (reading == LOW) {  // Button pressed
+  //   if (millis() - lastPressTime > pressWindow) {
+  //     // Reset count if more than 1 second has passed since last press
+  //     button3PressCount = 0;
+  //   }
+  //   button3PressCount++;       // Increment press count
+  //   lastPressTime = millis();  // Update last press time
+  // }
+  // debounceTimes[3] = millis();
+  // }
+  // // Check if 1 second has passed since the last press
+  // if ((millis() - lastPressTime) > pressWindow && button3PressCount > 0) {
+  //   Serial.println(button3PressCount);
+  //   handleButtonPress(button3PressCount);
+  //   button3PressCount = 0;  // Reset the count after calling the function
+  // }
 
-        // Ensure the counter stays within 0 to 100
-        curVol = max(0, min(curVol, 100));
 
-        // Print the updated counter value
-        Serial.println(curVol);
+  // Read the current state of the CLK pin
+  int currentStateCLK = digitalRead(CLK_PIN);
 
-        // Update the debounce time
-        lastDebounceTime = millis();
-        lastChangeTime = millis();  // Reset the last change time
+  // If the state of CLK has changed, a rotation occurred
+  if (currentStateCLK != lastStateCLK) {
+    // Check if enough time has passed to debounce
+    if ((millis() - lastDebounceTime) > debounceDelay) {
+      // Determine the direction based on DT pin
+      if (digitalRead(DT_PIN) != currentStateCLK) {
+        // Clockwise rotation
+        curVol = curVol - 5;
+      } else {
+        // Counter-clockwise rotation
+        curVol = curVol + 5;
       }
+
+      // Ensure the counter stays within 0 to 100
+      curVol = max(0, min(curVol, 100));
+
+      // Print the updated counter value
+      Serial.println(curVol);
+
+      // Update the debounce time
+      lastDebounceTime = millis();
+      lastChangeTime = millis();  // Reset the last change time
     }
-
-    // Save the current state as the last state for the next loop iteration
-    lastStateCLK = currentStateCLK;
-
-    // Check if 1 second has passed since the last change
-    if ((millis() - lastChangeTime) > displayDelay) {
-      // No change for the last second, print the current Volume value
-      if (curVol != lastCounter) {
-        spotifyConnection.adjustVolume(curVol);
-        lastCounter = curVol;
-      }
-      // Reset the last change time to avoid repetitive printing
-      lastChangeTime = millis();
-    }
-
-    timeLoop = millis();  // Update the loop time
-  } else {
-    server.handleClient();
   }
+
+  // Save the current state as the last state for the next loop iteration
+  lastStateCLK = currentStateCLK;
+
+  // Check if 1 second has passed since the last change
+  if ((millis() - lastChangeTime) > displayDelay) {
+    // No change for the last second, print the current Volume value
+    if (curVol != lastCounter) {
+      spotifyConnection.adjustVolume(curVol);
+      lastCounter = curVol;
+    }
+    // Reset the last change time to avoid repetitive printing
+    lastChangeTime = millis();
+  }
+
+  timeLoop = millis();  // Update the loop time
+}
+else {
+  server.handleClient();
+}
 }
