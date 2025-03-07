@@ -572,16 +572,15 @@ void handleButtonPress(int buttonIndex) {
   bool test = false;
   switch (buttonIndex) {
     case 0:  // D0
-      // spotifyConnection.shuffleSong(spotifyConnection.currentSong.shuffleState);
       break;
     case 1:  // D6
-      spotifyConnection.skipBack();
+      spotifyConnection.togglePlay();
       break;
     case 2:  //TX
       spotifyConnection.skipForward();
       break;
     case 3:  //RX
-      spotifyConnection.togglePlay();
+      spotifyConnection.skipBack();
       break;
     default:
       break;
@@ -721,73 +720,51 @@ void loop() {
       handleButtonPress(button3PressCount);
       button3PressCount = 0;  // Reset the count after calling the function
     }
-  // }
 
-  // int reading = digitalRead(3);
-  // if (reading != buttonStates[3]) {
-  //   if (reading == LOW) {  // Button pressed
-  //   if (millis() - lastPressTime > pressWindow) {
-  //     // Reset count if more than 1 second has passed since last press
-  //     button3PressCount = 0;
-  //   }
-  //   button3PressCount++;       // Increment press count
-  //   lastPressTime = millis();  // Update last press time
-  // }
-  // debounceTimes[3] = millis();
-  // }
-  // // Check if 1 second has passed since the last press
-  // if ((millis() - lastPressTime) > pressWindow && button3PressCount > 0) {
-  //   Serial.println(button3PressCount);
-  //   handleButtonPress(button3PressCount);
-  //   button3PressCount = 0;  // Reset the count after calling the function
-  // }
+    // Read the current state of the CLK pin
+    int currentStateCLK = digitalRead(CLK_PIN);
 
+    // If the state of CLK has changed, a rotation occurred
+    if (currentStateCLK != lastStateCLK) {
+      // Check if enough time has passed to debounce
+      if ((millis() - lastDebounceTime) > debounceDelay) {
+        // Determine the direction based on DT pin
+        if (digitalRead(DT_PIN) != currentStateCLK) {
+          // Clockwise rotation
+          curVol = curVol - 5;
+        } else {
+          // Counter-clockwise rotation
+          curVol = curVol + 5;
+        }
 
-  // Read the current state of the CLK pin
-  int currentStateCLK = digitalRead(CLK_PIN);
+        // Ensure the counter stays within 0 to 100
+        curVol = max(0, min(curVol, 100));
 
-  // If the state of CLK has changed, a rotation occurred
-  if (currentStateCLK != lastStateCLK) {
-    // Check if enough time has passed to debounce
-    if ((millis() - lastDebounceTime) > debounceDelay) {
-      // Determine the direction based on DT pin
-      if (digitalRead(DT_PIN) != currentStateCLK) {
-        // Clockwise rotation
-        curVol = curVol - 5;
-      } else {
-        // Counter-clockwise rotation
-        curVol = curVol + 5;
+        // Print the updated counter value
+        Serial.println(curVol);
+
+        // Update the debounce time
+        lastDebounceTime = millis();
+        lastChangeTime = millis();  // Reset the last change time
       }
-
-      // Ensure the counter stays within 0 to 100
-      curVol = max(0, min(curVol, 100));
-
-      // Print the updated counter value
-      Serial.println(curVol);
-
-      // Update the debounce time
-      lastDebounceTime = millis();
-      lastChangeTime = millis();  // Reset the last change time
     }
-  }
 
-  // Save the current state as the last state for the next loop iteration
-  lastStateCLK = currentStateCLK;
+    // Save the current state as the last state for the next loop iteration
+    lastStateCLK = currentStateCLK;
 
-  // Check if 1 second has passed since the last change
-  if ((millis() - lastChangeTime) > displayDelay) {
-    // No change for the last second, print the current Volume value
-    if (curVol != lastCounter) {
-      spotifyConnection.adjustVolume(curVol);
-      lastCounter = curVol;
+    // Check if 1 second has passed since the last change
+    if ((millis() - lastChangeTime) > displayDelay) {
+      // No change for the last second, print the current Volume value
+      if (curVol != lastCounter) {
+        spotifyConnection.adjustVolume(curVol);
+        lastCounter = curVol;
+      }
+      // Reset the last change time to avoid repetitive printing
+      lastChangeTime = millis();
     }
-    // Reset the last change time to avoid repetitive printing
-    lastChangeTime = millis();
-  }
 
-  timeLoop = millis();  // Update the loop time
-}
-else {
-  server.handleClient();
-}
+    timeLoop = millis();  // Update the loop time
+  } else {
+    server.handleClient();
+  }
 }
