@@ -47,6 +47,8 @@ For the display to work properly, we need to configure the drivers too:
 4. Uncomment '#define TFT_RGB_ORDER TFT_RGB' and comment out #define TFT_RGB_ORDER TFT_BGR
 5. OPTIONAL: If your display is showing inverted colors consider switching between #define TFT_INVERSION_ON or #define TFT_INVERSION_OFF, also in the Clone_thing.ino file try swaping TJpgDec.setSwapBytes(true); with TJpgDec.setSwapBytes(false);
 6. The drivers should be ready, have fun with your very Own-Clone Thing.
+
+### You can also just replace the drivers with the files provided in the repo 
    
 ---
 
