@@ -45,13 +45,13 @@ bool tft_output(int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t *bitmap) 
 |User modifiable variables|
 =========================*/
 // WiFi credentials
-#define WIFI_SSID "investRight"
-#define PASSWORD "5194044765"
+#define WIFI_SSID ""
+#define PASSWORD ""
 
 // Spotify API credentials
-#define CLIENT_ID "9902f56094ab40e4acbcf1870232c3ab"
-#define CLIENT_SECRET "cf29a8b79f91420aafc89302d52744ef"
-#define REDIRECT_URI "http://10.0.0.33/callback"
+#define CLIENT_ID ""
+#define CLIENT_SECRET ""
+#define REDIRECT_URI ""
 
 // Rotary Encoder
 #define CLK_PIN D1
