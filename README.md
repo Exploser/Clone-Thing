@@ -36,6 +36,19 @@ To set up your **Spotify API** credentials, follow these steps:
 9. Click **Edit** and update the **Redirect URI** with the one displayed by your device.
 
 ---
+## Driver Setup
+For the display to work properly, we need to configure the drivers too:
+
+1. For Windows: Navigate to "Documents\Arduino\libraries\TFT_eSPI" and edit User_Setup_Select.h.
+    1a. For MacOS: Navigate in Finder to ~/Documents/Arduino/libraries/TFT_eSPI.
+2. Comment the default library adding "//" in front of the #, then uncomment #include <User_Setups/Setup18_ST7789.h>. Save and exit.
+    2a. If you are using a different display, then uncomment the setup related to that IC (eg. #include <User_Setups/Setup2_ST7735.h>)
+3. Navigate to "Documents\Arduino\libraries\TFT_eSPI\User_Setups" and edit Setup18_ST7789.h
+4. Uncomment '#define TFT_RGB_ORDER TFT_RGB' and comment out #define TFT_RGB_ORDER TFT_BGR
+5. OPTIONAL: If your display is showing inverted colors consider switching between #define TFT_INVERSION_ON or #define TFT_INVERSION_OFF, also in the Clone_thing.ino file try swaping TJpgDec.setSwapBytes(true); with TJpgDec.setSwapBytes(false);
+6. The drivers should be ready, have fun with your very Own-Clone Thing.
+   
+---
 
 ## Controls
 - **1x Press** → Play/Pause
